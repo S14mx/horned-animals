@@ -71,30 +71,30 @@ This section has moved here: [https://facebook.github.io/create-react-app/docs/t
 
 Number and name of feature: Display images
 
-Estimate of time needed to complete: _____
+Estimate of time needed to complete: 40 min
 
 Start time: _____
 
 Finish time: _____
 
-Actual time needed to complete: _____
+Actual time needed to complete: 1.5 hours
 
 Number and name of feature: Allow users to vote for their favorite beast
 
-Estimate of time needed to complete: _____
+Estimate of time needed to complete: 1 hour
 
 Start time: _____
 
 Finish time: _____
 
-Actual time needed to complete: _____
+Actual time needed to complete: 1.5 hours
 
 Number and name of feature: Bootstrap
 
-Estimate of time needed to complete: _____
+Estimate of time needed to complete: 2 hours
 
 Start time: _____
 
 Finish time: _____
 
-Actual time needed to complete: _____
+Actual time needed to complete: 2 hours
