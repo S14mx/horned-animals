@@ -1,5 +1,6 @@
 import React from 'react';
-import Image from 'react-bootstrap/Image';
+import Card from 'react-bootstrap/Card';
+// import Image from 'react-bootstrap/Image';
 
 
 class HornedBeast extends React.Component {
@@ -16,12 +17,14 @@ class HornedBeast extends React.Component {
 
   render() {
     return (
-      <div>
-        <h2>{this.props.title}</h2>
-        <Image fluid src={this.props.src} alt={this.props.description} title={this.props.title} onClick={this.handleClick} />
-        <p>{this.props.description}</p>
-        <h3><span>{'\u{2764}'}</span> {this.state.likes}</h3>
-      </div>
+      <Card style={{ display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
+        <div>
+          <Card.Title>{this.props.title}</Card.Title>
+          <Card.Img src={this.props.src} alt={this.props.description} title={this.props.title} onClick={this.handleClick} />
+          <Card.Text>{this.props.description}</Card.Text>
+        </div>
+        <Card.Text><span>{'\u{2764}'}</span> {this.state.likes}</Card.Text>
+      </Card>
     );
   }
 }

@@ -1,5 +1,4 @@
 import React from 'react';
-import objectData from './data.json';
 import Container from 'react-bootstrap/Container';
 import './App.css';
 import Main from './Main.js';
@@ -11,7 +10,7 @@ class App extends React.Component {
     return (
       <Container fluid className="App">
         <Header title='Horned Animals' />
-        <Main beastObj={objectData}/>
+        <Main />
         <Footer title='Author: Sergii Otryshko'/>
       </Container>
     );
