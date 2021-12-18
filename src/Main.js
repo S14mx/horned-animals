@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
-import Container from 'react-bootstrap/Container';
-import Row from 'react-bootstrap/Row';
+import { Container, Row, Spinner } from 'react-bootstrap';
 import objectData from './data.json';
 import HornedBeast from './HornedBeast';
 import SortButtons from './SortButtons';
+import { emulateAsyncFetch } from './utils/dataFetchUtils';
 import { sortAsc, sortDesc, SortDirection } from './utils/sortUtils';
 
 class Main extends Component {
@@ -12,9 +12,18 @@ class Main extends Component {
 
     this.state = {
       likes: {},
-      data: objectData,
+      data: [],
+      loading: true,
     };
   }
+
+  loadData = () => {
+    if (this.state.loading) {
+      emulateAsyncFetch(objectData, 1000).then((data) =>
+        this.setState({ data: data, loading: false })
+      );
+    }
+  };
 
   handleLike = (title) => {
     this.setState({
@@ -37,23 +46,33 @@ class Main extends Component {
     this.setState({ data: sortedData });
   };
 
+  componentDidMount() {
+    this.loadData();
+  }
+
   render() {
     return (
       <Container className="main">
-        <SortButtons sortByLikesCount={this.sortByLikesCount} />
-        <Row className="g-4" sm={2} md={3} lg={4}>
-          {this.state.data.map(({ title, description, image_url }) => (
-            <HornedBeast
-              handleLike={this.handleLike}
-              getLikesCount={this.getLikesCount}
-              title={title}
-              key={title}
-              description={description}
-              src={image_url}
-              alt={description}
-            />
-          ))}
-        </Row>
+        {this.state.loading && <Spinner animation="border" />}
+
+        {this.state.data.length > 0 && (
+          <>
+            <SortButtons sortByLikesCount={this.sortByLikesCount} />
+            <Row className="g-4" sm={2} md={3} lg={4}>
+              {this.state.data.map(({ title, description, image_url }) => (
+                <HornedBeast
+                  handleLike={this.handleLike}
+                  getLikesCount={this.getLikesCount}
+                  title={title}
+                  key={title}
+                  description={description}
+                  src={image_url}
+                  alt={description}
+                />
+              ))}
+            </Row>{' '}
+          </>
+        )}
       </Container>
     );
   }
