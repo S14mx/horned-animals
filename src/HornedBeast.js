@@ -3,18 +3,20 @@ import Card from 'react-bootstrap/Card';
 // import Image from 'react-bootstrap/Image';
 
 class HornedBeast extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      likes: 0,
-    };
-  }
+  // constructor(props) {
+  //   super(props);
+  //   this.state = {
+  //     likes: 0,
+  //   };
+  // }
 
-  handleClick = () => {
-    this.setState({ likes: this.state.likes + 1 });
-  };
+  // handleClick = () => {
+  //   this.setState({ likes: this.state.likes + 1 });
+  // };
 
   render() {
+    const { description, showLikes, handleLike, src, title } = this.props;
+
     return (
       <Card
         style={{
@@ -24,17 +26,17 @@ class HornedBeast extends React.Component {
         }}
       >
         <div>
-          <Card.Title>{this.props.title}</Card.Title>
+          <Card.Title>{title}</Card.Title>
           <Card.Img
-            src={this.props.src}
-            alt={this.props.description}
-            title={this.props.title}
-            onClick={this.handleClick}
+            src={src}
+            alt={description}
+            title={title}
+            onClick={() => handleLike(title)}
           />
-          <Card.Text>{this.props.description}</Card.Text>
+          <Card.Text>{description}</Card.Text>
         </div>
         <Card.Text>
-          <span>{'\u{2764}'}</span> {this.state.likes}
+          <span>{'\u{2764}'}</span> {showLikes(title)}
         </Card.Text>
       </Card>
     );
