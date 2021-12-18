@@ -1,23 +1,30 @@
 {
-  "extends": "eslint:recommended",
+  "extends": [
+    "eslint:recommended",
+    "plugin:react/recommended",
+    "plugin:prettier/recommended"
+  ],
   "parserOptions": {
-    "ecmaVersion": 8
+    "requireConfigFile": false,
+    "ecmaVersion": 12,
+    "sourceType": "module",
+    "ecmaFeatures": {
+      "jsx": true,
+      "modules": true,
+      "arrowFunctions": true,
+      "classes": true
+    }
   },
   "env": {
+    "browser": true,
     "es6": true,
     "jest": true,
     "node": true
   },
   "rules": {
     "eol-last": "error",
-    "eqeqeq": [
-      "error",
-      "always"
-    ],
-    "indent": [
-      "error",
-      2
-    ],
+    "eqeqeq": ["error", "always"],
+    "indent": ["error", 2],
     "new-cap": "warn",
     "no-console": "off",
     "no-multi-spaces": [
@@ -44,6 +51,14 @@
         "allowTemplateLiterals": true
       }
     ],
-    "semi": "error"
+    "react/prop-types": "off",
+    "semi": "warn",
+    "prettier/prettier": [
+      "error",
+      {
+        "endOfLine": "auto",
+        "singleQuote": true
+      }
+    ]
   }
 }
