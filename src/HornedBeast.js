@@ -15,7 +15,7 @@ class HornedBeast extends React.Component {
   // };
 
   render() {
-    const { description, showLikes, handleLike, src, title } = this.props;
+    const { description, getLikesCount, handleLike, src, title } = this.props;
 
     return (
       <Card
@@ -36,7 +36,7 @@ class HornedBeast extends React.Component {
           <Card.Text>{description}</Card.Text>
         </div>
         <Card.Text>
-          <span>{'\u{2764}'}</span> {showLikes(title)}
+          <span>{'\u{2764}'}</span> {getLikesCount(title)}
         </Card.Text>
       </Card>
     );
