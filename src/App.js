@@ -9,9 +9,9 @@ class App extends React.Component {
   render() {
     return (
       <Container fluid className="App">
-        <Header title='Horned Animals' />
+        <Header title="Horned Animals" />
         <Main />
-        <Footer title='Author: Sergii Otryshko'/>
+        <Footer title="Author: Sergii Otryshko" />
       </Container>
     );
   }
