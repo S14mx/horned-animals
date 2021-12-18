@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Button } from 'react-bootstrap';
+import { SortDirection } from './utils/sortUtils';
 
 class SortButtons extends Component {
   render() {
@@ -10,14 +11,14 @@ class SortButtons extends Component {
         <Button
           className="mx-2"
           variant="outline-dark"
-          onClick={() => sortByLikesCount('asc')}
+          onClick={() => sortByLikesCount(SortDirection.Ascending)}
         >
           Sort Asc
         </Button>
         <Button
           className="mx-2"
           variant="outline-dark"
-          onClick={() => sortByLikesCount('desc')}
+          onClick={() => sortByLikesCount(SortDirection.Descending)}
         >
           Sort Desc
         </Button>

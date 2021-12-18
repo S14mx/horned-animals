@@ -1,30 +1,12 @@
-import React from 'react';
-import Card from 'react-bootstrap/Card';
-// import Image from 'react-bootstrap/Image';
+import React, { Component } from 'react';
+import { Card } from 'react-bootstrap';
 
-class HornedBeast extends React.Component {
-  // constructor(props) {
-  //   super(props);
-  //   this.state = {
-  //     likes: 0,
-  //   };
-  // }
-
-  // handleClick = () => {
-  //   this.setState({ likes: this.state.likes + 1 });
-  // };
-
+class HornedBeast extends Component {
   render() {
     const { description, getLikesCount, handleLike, src, title } = this.props;
 
     return (
-      <Card
-        style={{
-          display: 'flex',
-          flexDirection: 'column',
-          justifyContent: 'space-between',
-        }}
-      >
+      <Card style={cardStyles}>
         <div>
           <Card.Title>{title}</Card.Title>
           <Card.Img
@@ -36,11 +18,17 @@ class HornedBeast extends React.Component {
           <Card.Text>{description}</Card.Text>
         </div>
         <Card.Text>
-          <span>{'\u{2764}'}</span> {getLikesCount(title)}
+          {'\u{2764}'} {getLikesCount(title)}
         </Card.Text>
       </Card>
     );
   }
 }
+
+const cardStyles = {
+  display: 'flex',
+  flexDirection: 'column',
+  justifyContent: 'space-between',
+};
 
 export default HornedBeast;

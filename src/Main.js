@@ -1,16 +1,15 @@
-import React from 'react';
-import objectData from './data.json';
+import React, { Component } from 'react';
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
+import objectData from './data.json';
 import HornedBeast from './HornedBeast';
 import SortButtons from './SortButtons';
-import { sortAsc, sortDesc } from './utils';
-// import unicorn from './unicorn.jfif';
-// import rhino from './rhino.jfif';
+import { sortAsc, sortDesc, SortDirection } from './utils/sortUtils';
 
-class Main extends React.Component {
-  constructor(props) {
-    super(props);
+class Main extends Component {
+  constructor() {
+    super();
+
     this.state = {
       likes: {},
       data: objectData,
@@ -18,22 +17,19 @@ class Main extends React.Component {
   }
 
   handleLike = (title) => {
-    if (title in this.state.likes) {
-      this.setState({
-        likes: { ...this.state.likes, [title]: this.state.likes[title] + 1 },
-      });
-    } else {
-      this.setState({ likes: { ...this.state.likes, [title]: 1 } });
-    }
+    this.setState({
+      likes: {
+        ...this.state.likes,
+        [title]: (this.state.likes[title] ?? 0) + 1,
+      },
+    });
   };
 
-  getLikesCount = (title) =>
-    title in this.state.likes ? this.state.likes[title] : 0;
+  getLikesCount = (title) => this.state.likes[title] ?? 0;
 
   sortByLikesCount = (direction) => {
-    const asc = direction === 'asc';
     const sortedData = this.state.data.sort((a, b) =>
-      asc
+      direction === SortDirection.Ascending
         ? sortAsc(this.getLikesCount(a.title), this.getLikesCount(b.title))
         : sortDesc(this.getLikesCount(a.title), this.getLikesCount(b.title))
     );
