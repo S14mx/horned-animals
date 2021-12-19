@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Container, Row, Spinner } from 'react-bootstrap';
+import CustomModal from './CustomModal';
 import objectData from './data.json';
 import HornedBeast from './HornedBeast';
 import SortButtons from './SortButtons';
@@ -14,6 +15,8 @@ class Main extends Component {
       likes: {},
       data: [],
       loading: true,
+      showModal: false,
+      selected: {},
     };
   }
 
@@ -32,6 +35,30 @@ class Main extends Component {
         [title]: (this.state.likes[title] ?? 0) + 1,
       },
     });
+  };
+
+  handleDislike = (title) => {
+    if (this.state.likes[title] > 0) {
+      this.setState({
+        likes: {
+          ...this.state.likes,
+          [title]: (this.state.likes[title] ?? 0) - 1,
+        },
+      });
+    }
+  };
+
+  handleOpenModal = (selectedTitle) => {
+    this.setState({
+      showModal: true,
+      selected: this.state.data.filter(
+        ({ title }) => title === selectedTitle
+      )[0],
+    });
+  };
+
+  handleCloseModal = () => {
+    this.setState({ showModal: false, selected: {} });
   };
 
   getLikesCount = (title) => this.state.likes[title] ?? 0;
@@ -57,11 +84,19 @@ class Main extends Component {
 
         {this.state.data.length > 0 && (
           <>
+            <CustomModal
+              handleLike={this.handleLike}
+              handleDislike={this.handleDislike}
+              show={this.state.showModal}
+              onHide={this.handleCloseModal}
+              element={this.state.selected}
+              getLikesCount={this.getLikesCount}
+            />
             <SortButtons sortByLikesCount={this.sortByLikesCount} />
             <Row className="g-4" sm={2} md={3} lg={4}>
               {this.state.data.map(({ title, description, image_url }) => (
                 <HornedBeast
-                  handleLike={this.handleLike}
+                  handleOpenModal={this.handleOpenModal}
                   getLikesCount={this.getLikesCount}
                   title={title}
                   key={title}

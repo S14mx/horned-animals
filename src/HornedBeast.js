@@ -3,18 +3,14 @@ import { Card } from 'react-bootstrap';
 
 class HornedBeast extends Component {
   render() {
-    const { description, getLikesCount, handleLike, src, title } = this.props;
+    const { description, getLikesCount, handleOpenModal, src, title } =
+      this.props;
 
     return (
-      <Card style={cardStyles}>
+      <Card style={cardStyles} onClick={() => handleOpenModal(title)}>
         <div>
           <Card.Title>{title}</Card.Title>
-          <Card.Img
-            src={src}
-            alt={description}
-            title={title}
-            onClick={() => handleLike(title)}
-          />
+          <Card.Img src={src} alt={description} title={title} />
           <Card.Text>{description}</Card.Text>
         </div>
         <Card.Text>
