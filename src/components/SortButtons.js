@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Button } from 'react-bootstrap';
+import { Button, ButtonGroup } from 'react-bootstrap';
 import { SortDirection } from '../utils/sortUtils';
 
 class SortButtons extends Component {
@@ -7,22 +7,20 @@ class SortButtons extends Component {
     const { sortByLikesCount } = this.props;
 
     return (
-      <div className="my-4">
+      <ButtonGroup>
         <Button
-          className="mx-2"
-          variant="outline-dark"
+          variant="outline-secondary"
           onClick={() => sortByLikesCount(SortDirection.Ascending)}
         >
           Sort Asc
         </Button>
         <Button
-          className="mx-2"
-          variant="outline-dark"
+          variant="outline-secondary"
           onClick={() => sortByLikesCount(SortDirection.Descending)}
         >
           Sort Desc
         </Button>
-      </div>
+      </ButtonGroup>
     );
   }
 }

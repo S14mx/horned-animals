@@ -3,7 +3,7 @@ import { Container, Row, Spinner } from 'react-bootstrap';
 import CustomModal from './CustomModal';
 import objectData from '../data.json';
 import HornedBeast from './HornedBeast';
-import SortButtons from './SortButtons';
+import TopPanel from './TopPanel';
 import {
   emulateAsyncFetch,
   getFromStorageAsync,
@@ -21,7 +21,7 @@ class Main extends Component {
       data: [],
       loading: true,
       showModal: false,
-      selected: {},
+      selectedIndex: null,
     };
   }
 
@@ -67,12 +67,10 @@ class Main extends Component {
     }
   };
 
-  handleOpenModal = (selectedTitle) => {
+  handleOpenModal = (idx) => {
     this.setState({
       showModal: true,
-      selected: this.state.data.filter(
-        ({ title }) => title === selectedTitle
-      )[0],
+      selectedIndex: idx,
     });
   };
 
@@ -92,6 +90,15 @@ class Main extends Component {
     this.setState({ data: sortedData });
   };
 
+  generateCustomModalProps = () => ({
+    handleLike: this.handleLike,
+    handleDislike: this.handleDislike,
+    show: this.state.showModal,
+    onHide: this.handleCloseModal,
+    element: this.state.data[this.state.selectedIndex] ?? {},
+    getLikesCount: this.getLikesCount,
+  });
+
   componentDidMount() {
     this.loadData();
     this.setInitialLikes();
@@ -104,25 +111,15 @@ class Main extends Component {
 
         {this.state.data.length > 0 && (
           <>
-            <CustomModal
-              handleLike={this.handleLike}
-              handleDislike={this.handleDislike}
-              show={this.state.showModal}
-              onHide={this.handleCloseModal}
-              element={this.state.selected}
-              getLikesCount={this.getLikesCount}
-            />
-            <SortButtons sortByLikesCount={this.sortByLikesCount} />
+            <CustomModal {...this.generateCustomModalProps()} />
+            <TopPanel sortByLikesCount={this.sortByLikesCount} />
             <Row className="g-4" sm={2} md={3} lg={4}>
-              {this.state.data.map(({ title, description, image_url }) => (
+              {this.state.data.map((element, idx) => (
                 <HornedBeast
+                  key={idx}
                   handleOpenModal={this.handleOpenModal}
                   getLikesCount={this.getLikesCount}
-                  title={title}
-                  key={title}
-                  description={description}
-                  src={image_url}
-                  alt={description}
+                  element={{ ...element, idx: idx }}
                 />
               ))}
             </Row>{' '}

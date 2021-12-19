@@ -17,10 +17,18 @@ export class CustomModal extends Component {
         </Modal.Body>
         <Modal.Footer style={styles.footerStyles}>
           <ButtonGroup>
-            <Button variant="secondary" onClick={() => handleLike(title)}>
+            <Button
+              style={styles.buttonStyles}
+              variant="secondary"
+              onClick={() => handleLike(title)}
+            >
               {icons.like}
             </Button>
-            <Button variant="secondary" onClick={() => handleDislike(title)}>
+            <Button
+              style={styles.buttonStyles}
+              variant="secondary"
+              onClick={() => handleDislike(title)}
+            >
               {icons.dislike}
             </Button>
           </ButtonGroup>
@@ -43,6 +51,11 @@ const styles = {
   },
   bodyStyles: {
     textAlign: 'center',
+  },
+  buttonStyles: {
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
   },
 };
 
