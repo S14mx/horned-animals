@@ -1,15 +1,15 @@
 import React, { Component } from 'react';
 import { Container, Row, Spinner } from 'react-bootstrap';
 import CustomModal from './CustomModal';
-import objectData from './data.json';
+import objectData from '../data.json';
 import HornedBeast from './HornedBeast';
 import SortButtons from './SortButtons';
 import {
   emulateAsyncFetch,
   getFromStorageAsync,
   setToStorage,
-} from './utils/dataUtils';
-import { sortAsc, sortDesc, SortDirection } from './utils/sortUtils';
+} from '../utils/dataUtils';
+import { sortAsc, sortDesc, SortDirection } from '../utils/sortUtils';
 
 const LIKES_STORAGE_KEY = 'likes';
 class Main extends Component {

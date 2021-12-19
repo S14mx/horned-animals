@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Button } from 'react-bootstrap';
-import { SortDirection } from './utils/sortUtils';
+import { SortDirection } from '../utils/sortUtils';
 
 class SortButtons extends Component {
   render() {
