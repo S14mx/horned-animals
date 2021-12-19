@@ -13,6 +13,7 @@ class HornedBeast extends React.Component {
 
   handleClick = () => {
     this.setState({ likes: this.state.likes + 1 });
+    this.props.showModal(this.props.beastIdx);
   }
 
   render() {
