@@ -4,9 +4,14 @@ import CustomModal from './CustomModal';
 import objectData from './data.json';
 import HornedBeast from './HornedBeast';
 import SortButtons from './SortButtons';
-import { emulateAsyncFetch } from './utils/dataFetchUtils';
+import {
+  emulateAsyncFetch,
+  getFromStorageAsync,
+  setToStorage,
+} from './utils/dataUtils';
 import { sortAsc, sortDesc, SortDirection } from './utils/sortUtils';
 
+const LIKES_STORAGE_KEY = 'likes';
 class Main extends Component {
   constructor() {
     super();
@@ -28,23 +33,37 @@ class Main extends Component {
     }
   };
 
-  handleLike = (title) => {
-    this.setState({
-      likes: {
-        ...this.state.likes,
-        [title]: (this.state.likes[title] ?? 0) + 1,
-      },
+  setInitialLikes = () => {
+    getFromStorageAsync(LIKES_STORAGE_KEY).then((data) => {
+      if (data) {
+        this.setState({ likes: data });
+      }
     });
+  };
+
+  handleLike = (title) => {
+    this.setState(
+      (state) => ({
+        likes: {
+          ...state.likes,
+          [title]: (state.likes[title] ?? 0) + 1,
+        },
+      }),
+      () => setToStorage(LIKES_STORAGE_KEY, this.state.likes)
+    );
   };
 
   handleDislike = (title) => {
     if (this.state.likes[title] > 0) {
-      this.setState({
-        likes: {
-          ...this.state.likes,
-          [title]: (this.state.likes[title] ?? 0) - 1,
-        },
-      });
+      this.setState(
+        (state) => ({
+          likes: {
+            ...state.likes,
+            [title]: (state.likes[title] ?? 0) - 1,
+          },
+        }),
+        () => setToStorage(LIKES_STORAGE_KEY, this.state.likes)
+      );
     }
   };
 
@@ -75,6 +94,7 @@ class Main extends Component {
 
   componentDidMount() {
     this.loadData();
+    this.setInitialLikes();
   }
 
   render() {

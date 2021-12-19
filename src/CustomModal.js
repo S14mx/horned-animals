@@ -3,11 +3,12 @@ import { Button, ButtonGroup, Image, Modal } from 'react-bootstrap';
 
 export class CustomModal extends Component {
   render() {
-    const { element, getLikesCount, handleLike, handleDislike } = this.props;
+    const { element, getLikesCount, handleLike, handleDislike, show, onHide } =
+      this.props;
     const { image_url, description, title } = element;
 
     return (
-      <Modal {...this.props} size="lg" centered>
+      <Modal show={show} onHide={onHide} size="lg" centered>
         <Modal.Header closeButton>
           <Modal.Title>{title}</Modal.Title>
         </Modal.Header>
@@ -41,7 +42,7 @@ const styles = {
     justifyContent: 'space-between',
   },
   bodyStyles: {
-    thextAlign: 'center',
+    textAlign: 'center',
   },
 };
 
