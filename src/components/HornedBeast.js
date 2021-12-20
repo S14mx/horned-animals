@@ -20,12 +20,11 @@ class HornedBeast extends Component {
 
   render() {
     const { getLikesCount, handleOpenModal, element } = this.props;
-    const { description, image_url, title, idx } = element;
-
+    const { description, image_url, title, id } = element;
     return (
       <Card
         style={cardStyles}
-        onClick={() => handleOpenModal(idx)}
+        onClick={() => handleOpenModal(id)}
         onMouseEnter={this.setSelected}
         onMouseLeave={this.setUnselected}
         border={this.state.selected && 'secondary'}

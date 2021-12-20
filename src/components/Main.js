@@ -1,17 +1,20 @@
 import React, { Component } from 'react';
 import { Container, Row, Spinner } from 'react-bootstrap';
-import CustomModal from './CustomModal';
 import objectData from '../data.json';
-import HornedBeast from './HornedBeast';
-import TopPanel from './TopPanel';
 import {
   emulateAsyncFetch,
+  filterData,
   getFromStorageAsync,
+  populateId,
   setToStorage,
 } from '../utils/dataUtils';
 import { sortAsc, sortDesc, SortDirection } from '../utils/sortUtils';
+import CustomModal from './CustomModal';
+import HornedBeast from './HornedBeast';
+import TopPanel from './TopPanel';
 
 const LIKES_STORAGE_KEY = 'likes';
+const FILTER_BY_FIELDS = ['title', 'description', 'keyword', 'id'];
 class Main extends Component {
   constructor() {
     super();
@@ -21,14 +24,15 @@ class Main extends Component {
       data: [],
       loading: true,
       showModal: false,
-      selectedIndex: null,
+      selectedId: null,
+      filterSelection: '',
     };
   }
 
   loadData = () => {
     if (this.state.loading) {
       emulateAsyncFetch(objectData, 1000).then((data) =>
-        this.setState({ data: data, loading: false })
+        this.setState({ data: populateId(data), loading: false })
       );
     }
   };
@@ -67,10 +71,14 @@ class Main extends Component {
     }
   };
 
-  handleOpenModal = (idx) => {
+  handleOnFilter = (filterSelection) => {
+    this.setState({ filterSelection: filterSelection });
+  };
+
+  handleOpenModal = (id) => {
     this.setState({
       showModal: true,
-      selectedIndex: idx,
+      selectedId: id,
     });
   };
 
@@ -95,7 +103,8 @@ class Main extends Component {
     handleDislike: this.handleDislike,
     show: this.state.showModal,
     onHide: this.handleCloseModal,
-    element: this.state.data[this.state.selectedIndex] ?? {},
+    element:
+      this.state.data.filter(({ id }) => id === this.state.selectedId)[0] ?? {},
     getLikesCount: this.getLikesCount,
   });
 
@@ -105,23 +114,31 @@ class Main extends Component {
   }
 
   render() {
-    return (
-      <Container className="main">
-        {this.state.loading && <Spinner animation="border" />}
+    const { loading, data, filterSelection } = this.state;
 
-        {this.state.data.length > 0 && (
+    return (
+      <Container className="main" style={containerStyles}>
+        {loading && <Spinner animation="border" />}
+
+        {data.length > 0 && (
           <>
             <CustomModal {...this.generateCustomModalProps()} />
-            <TopPanel sortByLikesCount={this.sortByLikesCount} />
+            <TopPanel
+              sortByLikesCount={this.sortByLikesCount}
+              handleOnFilter={this.handleOnFilter}
+              filterByFields={FILTER_BY_FIELDS}
+            />
             <Row className="g-4" sm={2} md={3} lg={4}>
-              {this.state.data.map((element, idx) => (
-                <HornedBeast
-                  key={idx}
-                  handleOpenModal={this.handleOpenModal}
-                  getLikesCount={this.getLikesCount}
-                  element={{ ...element, idx: idx }}
-                />
-              ))}
+              {filterData(data, filterSelection, FILTER_BY_FIELDS).map(
+                (element) => (
+                  <HornedBeast
+                    key={element.id}
+                    handleOpenModal={this.handleOpenModal}
+                    getLikesCount={this.getLikesCount}
+                    element={element}
+                  />
+                )
+              )}
             </Row>{' '}
           </>
         )}
@@ -129,5 +146,9 @@ class Main extends Component {
     );
   }
 }
+
+const containerStyles = {
+  minHeight: '85vh',
+};
 
 export default Main;

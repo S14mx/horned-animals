@@ -4,10 +4,15 @@ import SearchField from './SearchField';
 
 export default class TopPanel extends Component {
   render() {
+    const { handleOnFilter, sortByLikesCount, filterByFields } = this.props;
+
     return (
       <div style={containerStyles}>
-        <SearchField />
-        <SortButtons sortByLikesCount={this.props.sortByLikesCount} />
+        <SearchField
+          handleOnFilter={handleOnFilter}
+          filterByFields={filterByFields}
+        />
+        <SortButtons sortByLikesCount={sortByLikesCount} />
       </div>
     );
   }
