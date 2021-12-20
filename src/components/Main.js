@@ -139,7 +139,7 @@ class Main extends Component {
                   />
                 )
               )}
-            </Row>{' '}
+            </Row>
           </>
         )}
       </Container>

@@ -12,13 +12,13 @@ class SortButtons extends Component {
           variant="outline-secondary"
           onClick={() => sortByLikesCount(SortDirection.Ascending)}
         >
-          Sort Asc
+          Sort by likes Asc
         </Button>
         <Button
           variant="outline-secondary"
           onClick={() => sortByLikesCount(SortDirection.Descending)}
         >
-          Sort Desc
+          Sort by likes Desc
         </Button>
       </ButtonGroup>
     );
