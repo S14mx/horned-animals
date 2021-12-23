@@ -6,15 +6,16 @@ import Main from './Main.js';
 import Header from './Header.js';
 import Footer from './Footer.js';
 import SelectedBeast from './SelectedBeast.js';
+import InputField from './InputField.js';
 
 class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       show: false,
-      selectedIndex: 0
+      selectedIndex: 0,
+      filteredObjs: objectData
     };
-
   }
 
   hideModal = () => {
@@ -26,11 +27,23 @@ class App extends React.Component {
     this.setState({ show: true, selectedIndex: beastIdx }, () => console.log('after', this.state.show, this.state.selectedIndex)); // access newly set state(real time state)
   }
 
+  filterBeasts = (event) => {
+    const selection = parseInt(event.target.value);
+    let filteredObjs;
+    if (selection) {
+      filteredObjs = objectData.filter(obj => obj.horns === selection);
+      this.setState({ filteredObjs: filteredObjs });
+    } else {
+      this.setState({ filteredObjs: objectData });
+    }
+  }
+
   render() {
     return (
       <Container fluid className="App">
         <Header title='Horned Animals' />
-        <Main objData={objectData} showModal={this.showModal} />
+        <InputField objectData={objectData} filterBeasts={this.filterBeasts}/>
+        <Main objData={this.state.filteredObjs} showModal={this.showModal} />
         <Footer title='Author: Sergii Otryshko' />
         <SelectedBeast objData={objectData[this.state.selectedIndex]} show={this.state.show} hide={this.hideModal} />
       </Container>
